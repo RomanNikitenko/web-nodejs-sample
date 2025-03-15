@@ -22,8 +22,8 @@ components:
       memoryRequest: 256Mi
       mountSources: true
       env:
-        - name: VSCODE_TRUSTED_EXTENSIONS
-          value: "GitHub.copilot,GitHub.copilot-chat"
+        - name: EXTENSIONS_INSTALL_FROM_VSIX
+          value: "false"
     attributes:
       controller.devfile.io/merge-contribution: true
 
