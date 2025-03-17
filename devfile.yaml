@@ -23,7 +23,7 @@ components:
       mountSources: true
       env:
         - name: EXTENSIONS_INSTALL_FROM_VSIX
-          value: "false"
+          value: "true"
     attributes:
       controller.devfile.io/merge-contribution: true
 
