@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: test-pull-request
+  name: test-ubi9-minimal
 attributes:
   .vscode/extensions.json: |
     {
@@ -11,7 +11,7 @@ attributes:
 components:
   - name: tools
     container:
-      image: registry.access.redhat.com/ubi9/nodejs-20:9.5-1733148170
+      image: registry.access.redhat.com/ubi9/ubi-minimal:9.5-1739420147@sha256:14f14e03d68f7fd5f2b18a13478b6b127c341b346c86b6e0b886ed2b7573b8e0
       args: ['tail', '-f', '/dev/null']
       endpoints:
         - exposure: public
