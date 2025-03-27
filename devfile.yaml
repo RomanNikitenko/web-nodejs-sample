@@ -1,6 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
-  name: test-pull-request
+  name: install-from-vsix-disabled
 components:
   - name: tools
     container:
@@ -17,7 +17,18 @@ components:
     attributes:
       controller.devfile.io/merge-contribution: true
 
+events:
+  postStart:
+    - add-default-extensions
+    
 commands:
+  - id: add-default-extensions
+    exec:
+      component: tools
+      commandLine: |
+        curl https://open-vsx.org/api/atlassian/atlascode/3.0.10/file/atlassian.atlascode-3.0.10.vsix --location -o /tmp/atlassian.atlascode-3.0.10.vsix
+        curl https://open-vsx.org/api/snowflake/snowflake-vsc/1.9.1/file/snowflake.snowflake-vsc-1.9.1.vsix --location -o /tmp/snowflake.snowflake-vsc-1.9.1.vsix
+  
   - id: install-dependencies
     exec:
       label: "Install dependencies"
