@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "web-nodejs-sample",
+			"path": "/projects/web-nodejs-sample"
+		}
+	],
+	"extensions": {
+		"recommendations": [
+			"dbaeumer.vscode-eslint",
+			"github.vscode-pull-request-github",
+			"redhat.vscode-yaml"
+		]
+	}
+}

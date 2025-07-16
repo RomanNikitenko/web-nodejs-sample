@@ -1,6 +1,6 @@
 schemaVersion: 2.3.0
 metadata:
-  name: test-workspace-file-no-extensions
+  name: test-workspace-file-with-extensions
 components:
   - name: tools
     container:
@@ -16,7 +16,7 @@ components:
       mountSources: true
       env:
       - name: VSCODE_DEFAULT_WORKSPACE
-        value: "/projects/web-nodejs-sample/workspace-file-no-extensions.code-workspace"
+        value: "/projects/web-nodejs-sample/workspace-file-with-extensions.code-workspace"
     attributes:
       controller.devfile.io/merge-contribution: true
 
