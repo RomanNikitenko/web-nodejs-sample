@@ -4,6 +4,7 @@
     "recommendations": [
       "dbaeumer.vscode-eslint",
       "ms-vscode.js-debug",
+      "redhat.vscode-xml",
       "github.vscode-pull-request-github"
     ]
 }
