@@ -1,10 +1,10 @@
 schemaVersion: 2.3.0
 metadata:
-  name: test-ubuntu-22
+  name: test-ubuntu-23
 components:
   - name: tools
     container:
-      image: docker.io/ubuntu:22.04
+      image: docker.io/ubuntu:23.10
       args: ['tail', '-f', '/dev/null']
       endpoints:
         - exposure: public
