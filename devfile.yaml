@@ -11,7 +11,7 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: quay.io/okurinny/base-developer-image:ubi10-latest
+      image: registry.access.redhat.com/ubi9-minimal:9.6
       args: ['tail', '-f', '/dev/null']
       endpoints:
         - exposure: public
