@@ -11,15 +11,10 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: registry.access.redhat.com/ubi9-minimal:9.6
+      image: quay.io/okurinny/base-developer-image:ubi10-latest
       args: ['tail', '-f', '/dev/null']
-      endpoints:
-        - exposure: public
-          name: nodejs
-          protocol: http
-          targetPort: 3000
-      memoryLimit: 2Gi
-      memoryRequest: 256Mi
+      memoryLimit: 4Gi
+      memoryRequest: 2Gi
       mountSources: true
       env:
         - name: VSCODE_TRUSTED_EXTENSIONS
