@@ -24,6 +24,8 @@ components:
       env:
         - name: VSCODE_TRUSTED_EXTENSIONS
           value: "GitHub.copilot,GitHub.copilot-chat"
+        - name: MACHINE_EXEC_MODE
+          value: "static"
     attributes:
       controller.devfile.io/merge-contribution: true
 
