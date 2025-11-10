@@ -4,7 +4,13 @@ metadata:
 components:
   - name: tools
     container:
-      image: registry.access.redhat.com/ubi9/nodejs-20:9.5-1733148170
+    # machine-exec depends on the libresolv library
+    # it should fail if the lib is absent in the tool container
+    # uncomment MACHINE_EXEC_MODE env variable - it should fix the problem
+      image: quay.io/rnikitenko/ubi8-minimal:without-libresolv
+      # env:
+      #   - name: MACHINE_EXEC_MODE
+      #     value: "static"
       args: ['tail', '-f', '/dev/null']
       endpoints:
         - exposure: public
