@@ -26,6 +26,8 @@ components:
           value: "GitHub.copilot,GitHub.copilot-chat"
         - name: MACHINE_EXEC_MODE
           value: "static"
+        - name: VSCODE_POLICY_FILE
+          value: "/checode-config/policies.json"
     attributes:
       controller.devfile.io/merge-contribution: true
 
