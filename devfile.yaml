@@ -57,3 +57,9 @@ commands:
           kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
       group:
         kind: run
+  - id: install-deps-and-run-app
+    composite:
+      commands:
+        - install-dependencies
+        - run-application
+      parallel: false
