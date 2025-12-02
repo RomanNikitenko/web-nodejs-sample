@@ -95,9 +95,9 @@ commands:
         - install-dependencies
         - run-application
       parallel: false
-  - id: check-node-and-install-deps-and-run-app
+  - id: parallel-install-deps-and-run-app
     composite:
-      label: "Check Node.js version => Install deps => Run web app"
+      label: "Parallel: Install deps and Run web app"
       commands:
         - node-version
         - install-dependencies
