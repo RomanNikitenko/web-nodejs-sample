@@ -69,7 +69,7 @@ commands:
       commandLine: "npm -v"
   - id: npm-version-node-version
     composite:
-      label: "Check versions"
+      label: "Sequential: Check versions"
       commands:
         - npm-version
         - node-version
@@ -99,15 +99,21 @@ commands:
     composite:
       label: "Parallel: Install deps and Run web app"
       commands:
-        - node-version
         - install-dependencies
         - run-application
-      parallel: false
+      parallel: true
   - id: check-node-and-install-deps-and-run-app
     composite:
       label: "Check Node.js version => Install deps => Run web app"
       commands:
         - node-version
         - install-dependencies
+        - run-application
+      parallel: false
+  - id: check-versions-install-deps-run-app
+    composite:
+      label: "Check versions => Install deps => Run web app"
+      commands:
+        - check-versions-install-deps
         - run-application
       parallel: false
