@@ -57,6 +57,11 @@ commands:
           kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
       group:
         kind: run
+  - id: print-env-variables
+    exec:
+      label: "Print Env Variables"
+      component: tools
+      commandLine: "printenv"
   - id: node-version
     exec:
       label: "Check Node.js version"
@@ -117,3 +122,17 @@ commands:
         - check-versions-install-deps
         - run-application
       parallel: false
+  - id: print-env-variables-check-versions
+    composite:
+      label: "Print Env variables => Check versions"
+      commands:
+        - print-env-variables
+        - npm-version-node-version
+      parallel: false
+  - id: parallel-print-env-variables-check-versions
+    composite:
+      label: "Parallel: Print Env variables => Check versions"
+      commands:
+        - print-env-variables
+        - npm-version-node-version
+      parallel: true
