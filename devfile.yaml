@@ -1,6 +1,6 @@
 schemaVersion: 2.3.0
 metadata:
-  name: nodejs-web-app
+  name: composite-commands
 components:
   - name: tools
     container:
@@ -57,9 +57,57 @@ commands:
           kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
       group:
         kind: run
+  - id: node-version
+    exec:
+      label: "Check Node.js version"
+      component: tools
+      commandLine: "node -v"
+  - id: npm-version
+    exec:
+      label: "Check npm version"
+      component: tools
+      commandLine: "npm -v"
+  - id: npm-version-node-version
+    composite:
+      label: "Check versions"
+      commands:
+        - npm-version
+        - node-version
+      parallel: false
+  - id: check-versions-install-deps
+    composite:
+      label: "Check versions => Install deps"
+      commands:
+        - npm-version-node-version
+        - install-dependencies
+      parallel: false
+  - id: parallel-check-versions
+    composite:
+      label: "Parallel: Check versions"
+      commands:
+        - npm-version
+        - node-version
+      parallel: true
   - id: install-deps-and-run-app
     composite:
+      label: "Install deps => Run web app"
       commands:
+        - install-dependencies
+        - run-application
+      parallel: false
+  - id: check-node-and-install-deps-and-run-app
+    composite:
+      label: "Check Node.js version => Install deps => Run web app"
+      commands:
+        - node-version
+        - install-dependencies
+        - run-application
+      parallel: false
+  - id: check-node-and-install-deps-and-run-app
+    composite:
+      label: "Check Node.js version => Install deps => Run web app"
+      commands:
+        - node-version
         - install-dependencies
         - run-application
       parallel: false
