@@ -22,6 +22,12 @@ events:
     - add-default-extensions
     
 commands:
+  - id: install-extension
+    exec:
+      label: "Install Extension from VSIX using cli"
+      component: tools
+      commandLine: "/checode/checode-linux-libc/ubi9/bin/remote-cli/code-oss --install-extension /projects/web-nodejs-sample/redhat.vscode-yaml-1.19.1.vsix"
+  
   - id: add-default-extensions
     exec:
       component: tools
