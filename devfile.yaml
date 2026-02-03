@@ -44,6 +44,24 @@ commands:
       group:
         kind: run
 
+  - id: run-application-node
+    exec:
+      label: "Run web application (node)"
+      component: ubi9-tools
+      workingDir: ${PROJECT_SOURCE}/app
+      commandLine: "node app.js"
+      group:
+        kind: run
+
+  - id: run-application-inspect
+    exec:
+      label: "Run web application (node inspect)"
+      component: ubi9-tools
+      workingDir: ${PROJECT_SOURCE}/app
+      commandLine: "node --inspect app.js"
+      group:
+        kind: run
+
   - id: debug
     exec:
       label: "Run web application (debugging enabled)"
@@ -137,6 +155,13 @@ commands:
       commands:
         - install-dependencies
         - run-application
+      parallel: true
+  - id: parallel-run-two-apps
+    composite:
+      label: "Parallel: Run two app instances"
+      commands:
+        - run-application-node
+        - run-application-inspect
       parallel: true
   - id: check-node-and-install-deps-and-run-app
     composite:
