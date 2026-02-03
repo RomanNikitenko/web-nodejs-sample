@@ -62,6 +62,15 @@ commands:
       group:
         kind: run
 
+  - id: run-worker
+    exec:
+      label: "Run background worker"
+      component: ubi9-tools
+      workingDir: ${PROJECT_SOURCE}/app
+      commandLine: "node worker.js"
+      group:
+        kind: run
+
   - id: debug
     exec:
       label: "Run web application (debugging enabled)"
@@ -158,10 +167,10 @@ commands:
       parallel: true
   - id: parallel-run-two-apps
     composite:
-      label: "Parallel: Run two app instances"
+      label: "Parallel: Run app and worker"
       commands:
-        - run-application-node
-        - run-application-inspect
+        - run-application
+        - run-worker
       parallel: true
   - id: check-node-and-install-deps-and-run-app
     composite:
