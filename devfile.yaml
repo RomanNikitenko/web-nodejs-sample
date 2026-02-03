@@ -71,6 +71,15 @@ commands:
       group:
         kind: run
 
+  - id: run-application-watch
+    exec:
+      label: "Run web application (watch)"
+      component: ubi9-tools
+      workingDir: ${PROJECT_SOURCE}/app
+      commandLine: "nodemon app.js"
+      group:
+        kind: run
+
   - id: debug
     exec:
       label: "Run web application (debugging enabled)"
@@ -169,7 +178,7 @@ commands:
     composite:
       label: "Parallel: Run app and worker"
       commands:
-        - run-application
+        - run-application-watch
         - run-worker
       parallel: true
   - id: check-node-and-install-deps-and-run-app
