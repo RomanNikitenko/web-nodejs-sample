@@ -1,0 +1,71 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Example: Echo A",
+			"type": "shell",
+			"command": "echo Task A",
+			"windows": {
+				"command": "cmd",
+				"args": [
+					"/c",
+					"echo Task A"
+				]
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Example: Echo B",
+			"type": "shell",
+			"command": "echo Task B",
+			"windows": {
+				"command": "cmd",
+				"args": [
+					"/c",
+					"echo Task B"
+				]
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Example: Echo C",
+			"type": "shell",
+			"command": "echo Task C",
+			"windows": {
+				"command": "cmd",
+				"args": [
+					"/c",
+					"echo Task C"
+				]
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Example: Compound Parallel (A + B)",
+			"dependsOn": [
+				"Example: Echo A",
+				"Example: Echo B"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Example: Compound Sequence (A -> B -> C)",
+			"dependsOn": [
+				"Example: Echo A",
+				"Example: Echo B",
+				"Example: Echo C"
+			],
+			"dependsOrder": "sequence",
+			"problemMatcher": []
+		},
+		{
+			"label": "Example: Compound Nested (Parallel + C)",
+			"dependsOn": [
+				"Example: Compound Parallel (A + B)",
+				"Example: Echo C"
+			],
+			"dependsOrder": "sequence",
+			"problemMatcher": []
+		}
+	]
+}
