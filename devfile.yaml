@@ -24,6 +24,8 @@ components:
       env:
         - name: LD_LIBRARY_PATH 
           value: "/projects"
+        - name: LD_SANITIZE_MODE 
+          value: "openssl"
     attributes:
       controller.devfile.io/merge-contribution: true
 
