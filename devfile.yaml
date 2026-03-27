@@ -28,6 +28,8 @@ components:
           value: "static"
         - name: VSCODE_POLICY_FILE
           value: "/checode-config/policies.json"
+        - name: CHE_API_IMPORT_STRATEGY
+          value: "eager"
     attributes:
       controller.devfile.io/merge-contribution: true
 
