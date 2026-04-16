@@ -22,14 +22,8 @@ components:
       memoryRequest: 256Mi
       mountSources: true
       env:
-        - name: VSCODE_TRUSTED_EXTENSIONS
-          value: "GitHub.copilot,GitHub.copilot-chat"
-        - name: MACHINE_EXEC_MODE
-          value: "static"
-        - name: VSCODE_POLICY_FILE
-          value: "/checode-config/policies.json"
-        - name: CHE_API_IMPORT_STRATEGY
-          value: "eager"
+        - name: LD_SANITIZE_SCOPE
+          value: "none"
     attributes:
       controller.devfile.io/merge-contribution: true
 
