@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "web-nodejs",
+			"path": "/projects/web-nodejs-sample"
+		}
+	],
+	"extensions": {
+		"recommendations": [
+			"redhat.vscode-yaml",
+			"redhat.vscode-xml",
+			"eamodio.gitlens"
+		]
+	},
+	"settings": {
+		"workbench.colorTheme": "Default Light Modern",
+		"editor.wordWrap": "on",
+		"files.autoSave": "off"
+	}
+}
