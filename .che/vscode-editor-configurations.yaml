@@ -1,0 +1,32 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: vscode-editor-configurations
+  labels:
+    controller.devfile.io/mount-to-devworkspace: 'true'
+    controller.devfile.io/watch-configmap: 'true'
+  annotations:
+    controller.devfile.io/mount-as: file
+    controller.devfile.io/mount-path: /checode-config
+    controller.devfile.io/read-only: 'true'
+data:
+  configurations.json: |
+    {
+      "extensions.install-from-vsix-enabled": true
+    }
+  extensions.json: |
+    {
+      "recommendations": [
+          "dbaeumer.vscode-eslint",
+          "github.vscode-pull-request-github"
+      ]
+    }
+  settings.json: |
+    {
+      "window.header": "SOME HEADER MESSAGE",
+      "window.commandCenter": false,
+      "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#CCA700",
+        "titleBar.activeForeground": "#ffffff"
+      }
+    }
