@@ -1,59 +1,106 @@
-schemaVersion: 2.3.0
+schemaVersion: 2.2.2
 metadata:
-  name: nodejs-web-app
+  name: python
 components:
   - name: tools
     container:
       image: registry.access.redhat.com/ubi9/nodejs-20:9.5-1733148170
-      args: ['tail', '-f', '/dev/null']
-      endpoints:
-        - exposure: public
-          name: nodejs
-          protocol: https
-          targetPort: 3000
-      memoryLimit: 2Gi
-      memoryRequest: 256Mi
+      volumeMounts:
+        - name: venv
+          path: /home/user/.venv
+      memoryLimit: 512Mi
       mountSources: true
-    attributes:
-      controller.devfile.io/merge-contribution: true
+      env:
+        - name: VSCODE_DEFAULT_WORKSPACE
+          value: "/projects/web-nodejs-sample/workspace-file"
+        - name: DEFAULT_EXTENSIONS
+          value: |
+            /projects/devfile-3p-python/plugins/ms-python.python-2026.4.0.vsix;
+            /projects/devfile-3p-python/plugins/ms-python.vscode-pylance-2026.2.104.vsix;
+            /projects/devfile-3p-python/plugins/ms-python.debugpy-2026.6.0%40linux-x64.vsix;
+            /projects/devfile-3p-python/plugins/ms-python.vscode-python-envs-1.20.1.vsix;
+            /projects/devfile-3p-python/plugins/ms-python.mypy-type-checker-2026.6.0.vsix;
+            /projects/devfile-3p-python/plugins/charliermarsh.ruff-2026.54.0%40linux-x64.vsix;
+
+  - name: venv
+    volume:
+      size: 1G
 
 commands:
-  - id: install-dependencies
+  - id: configure-pip
     exec:
-      label: "Install dependencies"
-      component: tools
-      workingDir: ${PROJECT_SOURCE}/app
-      commandLine: "npm install"
+      label: "Configure pip"
+      component: universal-developer-image
+      workingDir: /projects/devfile-3p-python
+      commandLine: |
+        pip config set --user global.cert /etc/pki/tls/certs/ca-bundle.crt && \
+        pip config set --user global.index-url https://repo.cm-cic.fr/artifactory/api/pypi/all-pypi-dev/simple/ && \
+        pip config set --user global.trusted-host repo.cm-cic.fr
+      group:
+        kind: build
+        isDefault: true
+
+  - id: install-python-packages
+    exec:
+      component: universal-developer-image
+      commandLine: |
+        pip install --upgrade pip && \
+        pip install numpy pandas matplotlib scikit-learn pytest flake8
+      workingDir: /projects/devfile-3p-python
       group:
         kind: build
         isDefault: true
 
   - id: run-application
     exec:
-      label: "Run web application"
-      component: tools
-      workingDir: ${PROJECT_SOURCE}/app
-      commandLine: "nodemon app.js"
+      label: "Run application"
+      component: universal-developer-image
+      workingDir: /projects/devfile-3p-python
+      commandLine: "python3 hello-world.py"
       group:
         kind: run
 
-  - id: debug
+  - id: run-python
     exec:
-      label: "Run web application (debugging enabled)"
-      component: tools
-      workingDir: ${PROJECT_SOURCE}/app
-      commandLine: "nodemon --inspect app.js"
+      component: python
+      commandLine: python
+      workingDir: /projects/devfile-3p-python
       group:
-        kind: debug
+        kind: run
         isDefault: true
 
-  - id: stop-application
+  - id: run-pytest
     exec:
-      label: "Stop web application"
-      component: tools
-      commandLine: >-
-          node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
-          echo "Stopping node server with PIDs: ${node_server_pids}" && 
-          kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
+      component: universal-developer-image
+      commandLine: pytest
+      workingDir: /projects/devfile-3p-python
       group:
-        kind: run
+        kind: test
+
+  - id: run-flake8
+    exec:
+      component: universal-developer-image
+      commandLine: flake8 .
+      workingDir: /projects/devfile-3p-python
+      group:
+        kind: test
+
+  - id: add-default-extensions
+    exec:
+      component: universal-developer-image
+      workingDir: /projects/devfile-3p-python/plugins
+      commandLine: |
+        export ASVC_PASSWORD=$(cat /etc/secret/rhds-vsix-external-secret/password)
+        curl -u RHDS_VSIX_NI:$ASVC_PASSWORD -L -O "https://repo-si.cm-cic.fr/artifactory/external-generic-poc-devspace-vsix-local/ms-python/python/ms-python.python-2026.4.0.vsix"
+        curl -u RHDS_VSIX_NI:$ASVC_PASSWORD -L -O "https://repo-si.cm-cic.fr/artifactory/external-generic-poc-devspace-vsix-local/ms-python/vscode-pylance/ms-python.vscode-pylance-2026.2.104.vsix"
+        curl -u RHDS_VSIX_NI:$ASVC_PASSWORD -L -O "https://repo-si.cm-cic.fr/artifactory/external-generic-poc-devspace-vsix-local/ms-python/debugpy/ms-python.debugpy-2026.6.0%40linux-x64.vsix"
+        curl -u RHDS_VSIX_NI:$ASVC_PASSWORD -L -O "https://repo-si.cm-cic.fr/artifactory/external-generic-poc-devspace-vsix-local/ms-python/vscode-python-envs/ms-python.vscode-python-envs-1.20.1.vsix"
+        curl -u RHDS_VSIX_NI:$ASVC_PASSWORD -L -O "https://repo-si.cm-cic.fr/artifactory/external-generic-poc-devspace-vsix-local/ms-python/mypy-type-checker/ms-python.mypy-type-checker-2026.6.0.vsix"
+        curl -u RHDS_VSIX_NI:$ASVC_PASSWORD -L -O "https://repo-si.cm-cic.fr/artifactory/external-generic-poc-devspace-vsix-local/charliermarsh/ruff/charliermarsh.ruff-2026.54.0%40linux-x64.vsix"
+        unset ASVC_PASSWORD
+
+events:
+  postStart:
+    - configure-pip
+    - install-python-packages
+    - add-default-extensions
