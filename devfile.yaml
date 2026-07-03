@@ -2,9 +2,9 @@ schemaVersion: 2.2.2
 metadata:
   name: python
 components:
-  - name: tools
+  - name: universal-developer-image
     container:
-      image: registry.access.redhat.com/ubi9/nodejs-20:9.5-1733148170
+      image: quay.io/devfile/universal-developer-image:ubi10-latest
       volumeMounts:
         - name: venv
           path: /home/user/.venv
