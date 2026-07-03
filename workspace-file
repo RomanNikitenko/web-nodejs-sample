@@ -1,9 +1,6 @@
 {
 	"folders": [
 		{
-			"path": "web-nodejs-sample"
-		},
-		{
 			"name": "home",
 			"path": "/home/user"
 		}
