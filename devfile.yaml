@@ -5,7 +5,7 @@ projects:
   - name: python-ex
     git:
       remotes:
-        origin: origin: https://github.com/devfile-samples/python-ex
+        origin: https://github.com/devfile-samples/python-ex
 starterProjects:
 - git:
     checkoutFrom:
