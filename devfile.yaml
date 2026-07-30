@@ -1,6 +1,11 @@
 schemaVersion: 2.1.0
 metadata:
   name: test-pull-request
+projects:
+  - name: python-ex
+    git:
+      remotes:
+        origin: origin: https://github.com/devfile-samples/python-ex
 starterProjects:
 - git:
     checkoutFrom:
